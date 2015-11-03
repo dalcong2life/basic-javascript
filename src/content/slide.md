@@ -428,34 +428,33 @@ function printPosition(e){
 
 .left_code[
 ```
-  if(조건식1){
-      수행구문1;
-      수행구문2;
-  }else if(조건식2){
-      수행구문3;
-      수행구문4;
-  }else if(조건식3){
-      수행구문5;
-      수행구문6;
-  }else{
-      수행구문7;
-      수행구문8;
-  }
- 
+if(조건식1){
+  수행구문1;
+  수행구문2;
+}else if(조건식2){
+  수행구문3;
+  수행구문4;
+}else if(조건식3){
+  수행구문5;
+  수행구문6;
+}else{
+  수행구문7;
+  수행구문8;
+} 
 ```]
 
 .right_code[
 ```
-  var age = 19;
-  if(age >= 30){	
-      alert("30대 이상입니다.");
-  }else if(age >= 20){
-      alert("20대 입니다.");
-  }else if(age >= 10){
-      alert("10대 입니다.");
-  }else{
-      alert("10살 미만입니다.");
-  }
+var age = 19;
+if(age >= 30){	
+  alert("30대 이상입니다.");
+}else if(age >= 20){
+  alert("20대 입니다.");
+}else if(age >= 10){
+  alert("10대 입니다.");
+}else{
+  alert("10살 미만입니다.");
+}
 ```
 ]
 
@@ -489,21 +488,21 @@ function printPosition(e){
 
 .left_code[
 ```javascript
-    while(조건식){
-    	반복할 구문1;
-    	반복할 구문2;
-    }
+while(조건식){
+    반복할 구문1;
+    반복할 구문2;
+}
 ```]
 
 .right_code[
 ```
-  var sum = 0;
-  var i = 0;
-  while(i <= 10){
-  	sum += i;
-  	i++;
-  }
-  alert(sum);
+var sum = 0;
+var i = 0;
+while(i <= 10){
+    sum += i;
+    i++;
+}
+alert(sum);
 ```]
 
 ---
@@ -517,19 +516,19 @@ function printPosition(e){
 
 .left_code[
 ```javascript
-    for(초기화; 조건식; 증감식){
-    	반복할 구문1;
-    	반복할 구문2;
-    }
+for(초기화; 조건식; 증감식){
+    반복할 구문1;
+    반복할 구문2;
+}
 ```]
 
 .right_code[
 ```
-  var sum = 0;
-  for(var i=0; i<=10; i++){
-  	sum += i;
-  }
-  alert(sum);
+var sum = 0;
+for(var i=0; i<=10; i++){
+    sum += i;
+}
+alert(sum);
 ```]
 
 ---
@@ -648,16 +647,16 @@ function printPosition(e){
 ***
 ### ▶ 배열
 ```
-    var colorArr = ["orange", "yellow", "blue", "green", "red"];
-    
-    for(var i=0; i<colorArr.length; i++){
-    	console.log(colorArr[i]);
-    }
-    
-    // 배열의 값과 메소드까지 모두 출력
-    for(var k in colorArr){
-    	console.log(colorArr[k]);
-    }
+var colorArr = ["orange", "yellow", "blue", "green", "red"];
+
+for(var i=0; i<colorArr.length; i++){
+    console.log(colorArr[i]);
+}
+
+// 배열의 값과 메소드까지 모두 출력
+for(var k in colorArr){
+    console.log(colorArr[k]);
+}
 ```
 
 ---
@@ -704,13 +703,13 @@ function printPosition(e){
 ## **변수 스코프**
 ***
 ```
-  var sum = 10;         // 전역 변수
-  age = 30;             // 전역 변수
-  function rangeSum(num){	
+var sum = 10;         // 전역 변수
+age = 30;             // 전역 변수
+function rangeSum(num){	
 *   var sum = 20;       // 지역 변수
     (window.)count = 0; // 전역 변수
     alert(sum);
-  }
+}
 ```
 
 
