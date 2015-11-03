@@ -1,0 +1,21 @@
+{
+  "name": "basic-javascript",
+  "description": "",
+  "main": "index.js",
+  "authors": [
+    "dalcong2life <dalcong2life@gmail.com>"
+  ],
+  "license": "ISC",
+  "moduleType": [],
+  "homepage": "",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "remark": "~0.12.0"
+  }
+}
