@@ -28,6 +28,10 @@ h1, h2, h3 {
 .remark-slide-content ul {
     margin-top: 0.25em;
 }
+.gray {
+    color: darkgray;    
+}
+
 li p { line-height: 1.25em; }
 .red { color: #fa0000; }
 .large { font-size: 2em; }
@@ -40,8 +44,8 @@ code {
     background: steelblue;
     border-radius: 5px;
 }
-.remark-code, .remark-inline-code { font-family: 'Ubuntu Mono'; }
-.remark-code-line-highlighted     { background-color: #373832; }
+.remark-code, .remark-inline-code { font-family: 'Ubuntu Mono';}
+.remark-code-line-highlighted     { background-color: #e04251; }
 .pull-left {
     float: left;
     width: 47%;

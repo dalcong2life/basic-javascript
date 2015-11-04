@@ -4,15 +4,16 @@ class: center, middle
 
 # **객체지향 Javascript 기본**
 ***
-`- 자바스크립트 함수와 프로토타입 -`
+###`- 자바스크립트 함수와 프로토타입 -`
 
 ---
 ## **First-class objects**
 ***
 ### ▶ 1종 객체(First-class object)
 - 변수, 배열 엘리먼트, 다른 객체의 프로퍼티에 할당될 수 있다. 
-- 함수의인자로전달될수있다. •함수의결과값으로반환될수있다.
-- 리터럴로생성될수있다.
+- 함수의 인자로 전달 될 수 있다.
+- 함수의 결과값으로 반환 될 수있다.
+- 리터럴로 생성 될 수 있다.
 - 동적으로 생성된 프로퍼티를 가질 수 있다.
 
 ### ▶ 자바스크립트의 함수(Function)는 1종 객체
@@ -25,22 +26,20 @@ class: center, middle
 
 ### ▶ 함수 이름
 - 유효한 식별자이어야 함
-- 생략 가능
 
 ### ▶ 매개변수 목록
-- 쉼표로구분된매개변수목록과그매개변수목록을둘러싸고있는괄호 
+- 쉼표로 구분된 매개변수 목록과 그 매개변수 목록을 둘러싸고있는 괄호 
 - 매개변수는 생략 가능, 괄호는 필수
 
 ### ▶ 함수 본문
-- 중괄호로 둘러싸여 있는 자바스크립트 구문 •본문은생략가능,중괄호는필수
-
+- 중괄호로 둘러싸여 있는 자바스크립트 구문
+- 본문은 생략 가능, 중괄호는 필수
+- 
 ```
 function sum(x, y) { 
-    var result = x + y; 
-    return result;
+        var result = x + y; 
+        return result;
 } 
-
-function() { ... }
 ```
 
 ---
@@ -53,16 +52,18 @@ var add = function(x, y){
         var result = x + y; 
         return result;
 };
+　
 add(10, 20);
 ```
 
 ### ▶ 변수에 기명함수로 지정
-- 
+- 함수 내부에서 재귀호출으로만 사용 가능 
 ```
 var add = function sum(x, y){ 
         var result = x + y;
         return result;
 };
+　
 add(); ( O ) 
 sum(); ( X )
 ```
@@ -71,7 +72,7 @@ sum(); ( X )
 ## **함수 정의3(Function() 생성자 함수 이용)**
 ***
 ### ▶ 함수 객체를 생성해서 반환하는 Function 생성자 함수 이용
-- 
+-  
 ```
 var add = new Function("x", "y", "var result = x + y; return result;");
 ```
@@ -80,24 +81,26 @@ var add = new Function("x", "y", "var result = x + y; return result;");
 ## **함수 호이스팅**
 ***
 ### ▶ 함수 호이스팅
-- 함수선언문형태로정의한함수의유효범위는코드의맨처음부터시작한 다는 특징
-
+- 함수 선언문 형태로 정의한 함수의 유효범위는 코드의 맨 처음부터 시작한다는 특징
+- 
 ```javascript
 console.log(add(2,3)); // ( O )
-
+　
 function add(x, y) {
-    return x + y;
+        return x + y;
 }
-
+　
 console.log(add(3, 4)); // ( O )
 ```
+***
+- 
 ```javascript
 console.log(add(2,3)); // ( X )
-
+　
 var add = function(x, y) {
-    return x + y;
+        return x + y;
 };
-
+　
 console.log(add(3, 4)); // ( O )
 ```
 
@@ -105,7 +108,7 @@ console.log(add(3, 4)); // ( O )
 ## ** 유효 범위와 함수**
 ***
 ### ▶ 지역변수의 유효범위는 함수
-- 대부분의 언어에서는 선언한 변수가 블록 단위의 유효범위를 갖지만 자바스 크립트에서는 선언한 변수가 `함수 단위의 유효범위`를 갖는다.
+- 대부분의 언어에서는 선언한 변수가 블록 단위의 유효범위를 갖지만 자바스크립트에서는 선언한 변수가 `함수 단위의 유효범위`를 갖는다.
 
 ---
 ## **함수 호출 시 인자의 수**
@@ -119,7 +122,7 @@ console.log(add(3, 4)); // ( O )
 function add(x, y) {
         return x + y;
 }
-add(3);
+add(3);         // NaN
 ```
 
 ### ▶ 매개변수 < 인자
@@ -128,7 +131,7 @@ add(3);
 function add(x, y) {
         return x + y;
 }
-add(3, 4, 5);
+add(3, 4, 5);   // 7
 ```
 
 ---
@@ -139,13 +142,30 @@ add(3, 4, 5);
 
 ### ▶ arguments 매개변수
 - 함수 내에서 arguments 변수로 접근 가능
-- 함수에 전달된 모든 인자들을 담고 있는 컬렉션(Array는 아님)
+- 함수에 전달된 모든 인자들을 담고 있는 유사배열객체(Array는 아님)
 - 배열과 비슷하게 length 속성과 index로 각 인자에 접근 가능
 
 ### ▶ this 매개변수
 - 함수내에서 this 변수로 접근가능
 - `함수 컨텍스트` 객체
 - 함수를 호출한 객체에 대한 참조 
+
+---
+## **암묵적 매개변수**
+***
+### ▶ arguments
+```
+function sum() {
+    var result = 0;
+    for(var i = 0; i < arguments.length; i++) {
+        result += arguments[i];
+    }
+    return result;                
+}    
+　
+console.log(sum(1,2,3));                // (출력값) 6
+console.log(sum(1,2,3,4,5,6,7,8,9));    // (출력값) 45
+```
 
 ---
 ## **함수 호출 방법(1/4)**
@@ -161,6 +181,7 @@ function f1(){
         console.log(this);
 }; 
 f1();
+　
 var f2 = function(){
         console.log(this);
 }; 
@@ -198,13 +219,113 @@ o.whatever();
 this === Object {}
 ```
 
+
+---
+## **함수 호출 방법(2/4)**
+***
+### ▶ 내부 함수의 this 바인딩
+- 
+```
+    var value = 100;    // 전역 변수
+    var myObject = {
+        value: 1,
+        func1: function() {
+            this.value += 1;
+            console.log('func1() called. this.value : ' + this.value);
+        
+            // 내부 함수
+            func2 = function () {
+                this.value += 1;
+                console.log('func2() called. this.value : ' + this.value);
+            };
+        
+            func2();            // ②
+        }
+    };
+    myObject.func1();           // ①
+```        
+
+--
+- 
+```
+func1() called. this.value : 2 
+func2() called. this.value : 101
+```
+
+---
+## **함수 호출 방법(2/4)**
+***
+### ▶ 내부 함수의 this 바인딩 해결 방법 1
+- 
+```
+        var value = 100;    // 전역 변수
+        var myObject = {
+            value: 1,
+            func1: function() {
+    *           var that = this;
+                
+                this.value += 1;
+                console.log('func1() called. this.value : ' + this.value);
+            
+                // 내부 함수
+                func2 = function () {
+    *               that.value += 1;
+                    console.log('func2() called. this.value : ' + that.value);
+                };
+                
+                func2();            // ②
+            }
+        };
+        myObject.func1();           // ①
+```        
+
+--
+- 
+```
+func1() called. this.value : 2 
+func2() called. this.value : 3
+```
+
+---
+## **함수 호출 방법(2/4)**
+***
+### ▶ 내부 함수의 this 바인딩 해결 방법 2
+- 
+```
+        var value = 100;    // 전역 변수
+        var myObject = {
+            value: 1,
+            func1: function() {
+                this.value += 1;
+                console.log('func1() called. this.value : ' + this.value);
+            
+                // 내부 함수
+                func2 = function (p1, p2) {
+                    this.value += 1;
+                    console.log('func2() called. this.value : ' + this.value);
+                };
+            
+    *           func2().call(this, 10, 20);     // ②
+                // func2().apply(this, [10, 20]);   
+            }
+        };
+        myObject.func1();           // ①
+```        
+
+--
+- 
+```
+func1() called. this.value : 2 
+func2() called. this.value : 3
+```
+
 ---
 ## **함수 호출 방법(3/4)**
 ***
 ### ▶ apply(), call() 메서드로 호출
 - 함수(Function 클래스)에 정의된 메서드
 - 함수.apply(), 함수.call() 형태로 호출
-- this는 apply(), call() 메소드의 첫번째 인자로 전달되는 객체
+- `this는 apply(), call() 메소드의 첫번째 인자로 전달되는 객체`
 - this를 명시적으로 지정할 수 있음
 - 콜백 함수 호출 시 주로 사용
       
@@ -227,7 +348,7 @@ this === Object {}
 - `this는 생성자를 통해 생성된 객체`
       
 ### ▶ 생성자로 호출될 때의 내부 동작
-- 비어있는객체를새로생성
+- 비어 있는 객체를 새로생성
 - 새로 생성된 객체는 this 매개변수로 생성자 함수에 전달
 - 명시적으로 반환하는 객체가 없다면 생성된 객체를 반환
 - 객체지향 프로그램의 new 연산자와 비슷한 동작
@@ -237,6 +358,70 @@ this === Object {}
 - 명명(naming) 규칙
     - 일반함수: 작업 할 동작을 나타내는 동사로 이름짓고 소문자로 시작
     - 생성자: 생성할 객체를 나타내는 `명사`로 이름 짓고 `대문자`로 시작
+   
+---
+## **함수 호출 방법(4/4)**
+***
+### ▶ 생성자로 호출 방법
+```
+function Person(name, age){
+	this.name = name;
+	this.age = age;
+	this.getName = function(){
+		return this.name;
+	};
+}
+　
+var kim = new Person("김철수", 35);
+var lee = new Person("이영희", 30);
+console.log(kim.age);           // 35
+console.log(kim.getName());     // 김철수
+console.log(lee.age);           // 30
+console.log(lee.getName());     // 이영희
+```
+
+--
+```
+function Person(name, age){
+*   var this = new Object();
+	this.name = name;
+	this.age = age;
+	this.getName = function(){
+		return this.name;
+	};
+*   return this;
+}
+```
+
+---
+## **함수 호출 방법(4/4)**
+***
+### ▶ 생성자 함수 호출 오류 예방 방법
+```
+var kim = Person("김철수", 35);     // Person 내 this는 window 객체가 된다.
+console.log(kim);                   // undefined
+　
+console.log(window.age);            // 35
+```
+
+--
+```
+function Person(name, age){
+*   if(!(this instanceof Person)) { // or 'this instanceof arguments.callee'
+*       return new Person(name, age);
+*   }
+　
+	this.name = name;
+	this.age = age;
+	this.getName = function(){
+		return this.name;
+	};
+}
+```
+```
+var kim = Person("김철수", 35);
+console.log(kim.age);           // 35
+```
     
 ---
 ## **함수 호출 방법(4/4)**
@@ -286,14 +471,16 @@ window.onload = function(){};
 ***
 ### ▶ 콜백
 - 프로그램이 실행되는 동안 어떤 함수가 적절한 시점에 “다시 호출”된다는 의미
-- 특정한 상황이 되거나(이벤트 발생) 지정한 시간이 흐르면(timeout) 또는 특 정 작업의 수행이 끝나면 호출하도록 지정한 함수
+- 특정한 상황이 되거나(이벤트 발생) 지정한 시간이 흐르면(timeout) 또는 특정 작업의 수행이 끝나면 호출하도록 지정한 함수
 ```
 setTimeout(function(){ 
         console.log("1초가 흐름");
 }, 1000);
+　
 window.onload = function(){
         console.log("페이지 로딩 완료"); 
 }
+　
 someFunction(function(){
         console.log("someFunction 수행 완료후 처리할 일");
 });
@@ -306,7 +493,8 @@ someFunction(function(){
 - 배열의 마지막에 지정한 요소를 추가한다.
 - `this`로 지정된 Array 객체의 length 속성값에 해당하는 속성을 만들고 지정한 요소를 저장한 후 length를 하나 증가시킨다.
       
-### ▶ Array의 push() 메서드를 이용하여 객체를 배열처럼 동작시키기 • length 속성 추가
+### ▶ Array의 push() 메서드를 이용하여 객체를 배열처럼 동작시키기
+- length 속성 추가
 - Array.prototype.push.call(`객체`, 추가할 요소)
       
 ### ▶ prototype
@@ -329,6 +517,58 @@ someFunction(function(){
 - 캐시에필요한메모리사용량증가
 - 비즈니스로직과캐싱기능의혼재
 - 부하 테스트나 알고리즘의 성능 테스트가 어려워짐
+
+---
+## **연산 결과를 기억하는 함수**
+***
+### ▶ 메모이제이션(memoization) 예시
+- 
+```javascript
+    function isPrime(num){
+        if(!isPrime.answer) isPrime.answer = {};
+        if(isPrime.answer[num] != undefined){
+            return isPrime.answer[num];
+        }
+        var prime = true;
+        for(var i=2; i<=num/2; i++){
+            if(num % i == 0){
+                prime = false;
+                break;
+            }
+        }
+        
+        return isPrime.answer[num] = prime;
+    }
+    
+    var start = new Date().getTime();
+    console.log(3, isPrime(3));
+    console.log(4, isPrime(4));
+    console.log(1000000007, isPrime(1000000007));
+    console.log(1000000007, isPrime(1000000007));
+    console.log(1000000007, isPrime(1000000007));
+    var finish = new Date().getTime();
+    console.log("소요시간", finish-start + "ms");
+```
+
+???
+function isPrime(num){
+    var prime = true;
+    for(var i=2; i<=num/2; i++){
+        if(num % i == 0){
+            prime = false;
+            break;
+        }
+    }
+    return prime;
+}
+var start = new Date().getTime();
+console.log(3, isPrime(3));
+console.log(4, isPrime(4));
+console.log(1000000007, isPrime(1000000007));
+console.log(1000000007, isPrime(1000000007));
+console.log(1000000007, isPrime(1000000007));
+var finish = new Date().getTime();
+console.log("소요시간", finish-start + "ms");
 
 ---
 ## **가변 길이 인자 전달**
@@ -382,8 +622,177 @@ System.out.println(int i)
     - 함수가호출될때전달되는매개변수의수
 - 함수.length
     - 모든 함수에 기본으로 지정되는 속성
-    - 함수를선언할때지정한매개변수의수
-    
+    - 함수를 선언할 때 지정한 매개변수의 수
+   
+---
+## **함수 오버로딩 기법**
+***
+### ▶ 함수 오버로딩 기법 1
+```javascript
+var obj = {};
+obj.calc = function(n1, n2, n3){
+        if(3 == arguments.length) {
+            return Math.max(n1, n2, n3);// 인자값이 세개일 경우 가장 큰 값을 반환
+        } else {
+            if(2 == arguments.length) {
+                return n1 + n2;         // 인자값이 두개일 경우 합계를 반환
+            } else {
+                if(1 == arguments.length) {
+                    return n1 * n1;     // 인자값이 하나일 경우 제곱값을 반환
+                } else {
+                    if(0 == arguments.length) {
+                        return "인자값이 없습니다.";
+                    }
+                }
+            }
+        }
+};
+console.log(obj.calc());                // 인자값이 없습니다.
+console.log(obj.calc(10));              // 100
+console.log(obj.calc(10, 20));          // 30
+console.log(obj.calc(200, 100, 300));   // 300
+```
+
+---
+## **함수 오버로딩 기법**
+***
+### ▶ 함수 오버로딩 기법 2
+```
+function overloading(obj, name, fn){	// 객체, 메소드명, 실행할 함수
+    var oldfn = obj[name];
+    obj[name] = function(){
+        if(fn.length == arguments.length){
+            return fn.apply(this, arguments);
+        }else if(typeof oldfn == "function"){
+            return oldfn.apply(this, arguments);
+        }
+    };
+}
+
+var obj = {};
+overloading(obj, "calc", function(){                // ①
+	return "인자값이 없습니다.";
+});
+overloading(obj, "calc", function(n1){              // ②
+	return n1 * n1;
+});
+overloading(obj, "calc", function(n1, n2){          // ③
+	return n1 + n2;
+});
+overloading(obj, "calc", function(n1, n2, n3){      // ④
+	return Math.max(n1, n2, n3);
+});
+```
+
+---
+## **함수 오버로딩 기법**
+***
+### ▶ 함수 오버로딩 기법 2 - 1
+```
+// 최초 호출
+var oldfn = undefined;
+obj.calc = function(){
+	if(0 == arguments.length){
+		return function(){
+			return "인자값이 없습니다.";
+		};
+	}
+};
+```
+
+---
+## **함수 오버로딩 기법**
+***
+### ▶ 함수 오버로딩 기법 2 - 2
+```
+// 두번째 호출
+var oldfn = function(){
+	if(0 == arguments.length){
+		return function(){
+			return "인자값이 없습니다.";
+		};
+	}
+};
+obj.calc = function(){
+	if(1 == arguments.length){
+		return function(n1){
+			return n1 * n1;
+		};
+	} else if(typeof oldfn == "function"){
+		return function(){
+			if(0 == arguments.length){
+				return function(){
+					return "인자값이 없습니다.";
+				};
+			}
+		};
+	}
+};
+```
+
+---
+## **함수 오버로딩 기법**
+***
+### ▶ 함수 오버로딩 기법 2 - 3
+```
+// 세번째 호출
+obj.calc = function(){
+	if(2 == arguments.length){
+		return function(n1, n2){
+			return n1 + n2;
+		};
+	}else if(typeof oldfn == "function"){
+		return function(){
+			if(1 == arguments.length){
+				return function(n1){
+					return n1 * n1;
+				};
+			}else if(typeof oldfn == "function"){
+				return function(){
+					if(0 == arguments.length){
+						return function(){
+							return "인자값이 없습니다.";
+						};
+					}
+				};
+			}
+		};
+	}
+};
+```
+
+---
+## **함수 오버로딩 기법**
+***
+### ▶ 함수 오버로딩 기법 2 - 4
+```
+// 네번째 호출
+obj.calc = function(){
+	if(3 == arguments.length){
+		return function(n1, n2, n3){
+			return Math.max(n1, n2, n3);
+		};
+	}else{
+		return function(){
+			if(2 == arguments.length){
+				return function(n1, n2){
+					return n1 + n2;
+				};
+			}else{
+				return function(){
+					if(1 == arguments.length){
+						return function(n1){
+							return n1 * n1;
+						};
+					}else{
+						return function(){
+							if(0 == arguments.length){
+								return function(){
+									return "인자값이 없습니다.";
+								};
+...
+```
+
 ---
 ## **프로토타입이란?**
 ***
@@ -401,4 +810,116 @@ System.out.println(int i)
         m1: function(){ ... },
         m2: function(){ ... } 
     };
+```
+
+---
+## **프로토타입과 생성자**
+***
+### ▶ 객체 초기화 순서
+- 생성자 함수의 prototype 속성의 객체가 새로 만들어진 객체 인스턴스와 바인딩된다.(크롬은 \_\_proto\_\_ 속성)
+- 생성자 함수 내에서 정의한 속성들이 객체 인스턴스에 추가된다.
+    - 만약 프로토타입에 정의한 속성과 생성자에서 정의한 속성이 중복될 경우 생성자 내에서 정의한 속성이 프로토타입에 정의된 같은 이름의 속성보다 우선한다.
+
+---
+## **객체의 프로퍼티 참조**
+***
+### ▶ 객체의 프로퍼티 참조 순서(`프로토타입 체인`)
+1. 객체에 해당 프로퍼티가 있으면 사용한다.
+2. 객체에 연결된 프로토타입에 해당 프로퍼티가 있으면 사용한다.
+3. 프로토타입에도 해당 프로퍼티가 없으면 연결된 프로토타입에서 찾는다.(찾을때까지 3번을 반복한다.)
+4. 최상위 프로토타입인 Object까지 찾아봐서 해당 프로퍼티가 없다면 그 값은 undefined가 된다.
+즉, 프로퍼티 참조는 해당 객체에서 먼저 찾고, 실패했을 때 프로토타입을 확인함
+
+### ▶ constructor
+- 모든 객체에 정의되어 있는 속성
+- 해당 객체를 만드는데 사용된 생성자를 참조
+- 객체가 자신의 프로토타입을 찾는 방법
+- 객체.constructor.prototype
+
+---
+## **Object**
+***
+### ▶ 프로토타입 체인의 마지막 객체
+- 모든 객체의 prototype 체인 마지막 객체는 Object이다.
+- 즉, Array, String, Number, RegExp, Date, Function 등의 네이티브 객체와 Score, Person 등 사용자가 정의한 객체는 모두 프로토타입 체인에 의해서 자동으로 Object의 메소드를 사용할 수 있다.
+
+### ▶ 네이티브 객체 생성자의 prototype
+- 네이티브 객체 생성자도 prototype 속성이 있으므로 이곳에 속성을 추가해서 네이티브 객체의 기능을 확장할 수 있다.
+- Prototype.js 라이브러리가 좋은 예이다.
+    - Array.prototype.each()
+    - HTMLElement.prototype.remove()
+
+---
+## **네이티브 클래스 확장 시 주의사항**
+***
+### ▶ Object 기능 추가
+- Object를 확장하여 새로운 속성을 추가하면 생성되는 모든 객체가 해당 속성을 물려 받으므로 이에 따른 영향에 주의해야 함
+- hasOwnProperty() 메소드로 객체에 직접 정의된 속성인지 확인 가능
+      
+### ▶ Number 기능 추가
+- Number 객체의 확장된 속성을 사용할 때 변수에 담지 않고 리터럴로 직접 사용불가
+- Number.prototype.add = function(n){...};
+```
+var a=10; a.add(20);    // (O)
+10.add(20);             // (X)    
+```
+
+### ▶ 네이티브 클래스 상속
+- Array.length 속성이 수정안되는 IE(8이하) 버그 같은 문제 발생
+- 상속 보다는 위임으로 구현
+
+---
+## **생성자와 객체 타입**
+***
+### ▶ typeof 연산자
+- 객체의 타입을 반환
+```
+typeof "hello"      -> "string"
+typeof 10           -> "number"
+typeof true         -> "boolean"
+typeof []           -> "object"
+typeof {}           -> "object“
+typeof new Score()  -> "object"
+```
+- 기본 데이터 타입을 제외한 모든 인스턴스에 대해 object 반환
+
+---
+## **생성자와 객체 타입**
+***
+### ▶ instanceof 연산자
+- 객체가 지정한 생성자를 통해서 생성되었는지 판단
+- 기본 데이터타입의 리터럴 표현은 객체가 아니므로 생성자 함수가 없다.
+- JSON 표기법으로 생성한 배열이나 객체는 내부적으로 Array, Object 생성자 함수를 통해 생성이 된다.
+```
+10 instanceof Number                    -> false
+"hello" instanceof String               -> false
+true instanceof Boolean                 -> false
+//
+new Number(10) instanceof Number        -> true 
+new String("hello") instanceof String   -> true
+new Boolean() instanceof Boolean        -> true
+new Array() instanceof Array            -> true
+[] instanceof Array                     -> true
+new Object() instanceof Object          -> true
+var obj={}; obj instanceof Object       -> true
+new Score() instanceof Score            -> true
+new Score() instanceof Object           -> true
+```
+
+---
+## **상속과 프로토타입 체인**
+***
+### ▶ 프로토타입 체인을 이용한 상속 기능 구현
+- 하위 클래스의 프로토타입을 상위 클래스의 객체로 지정
+- 상위 클래스의 모든 속성을 물려받아 사용할 수 있음
+```
+function Score(){...}
+Score.prototype.avg = function(){};
+　
+function SubScore(){...}
+SubScore.prototype = new Score();
+　
+var sub = new SubScore();
+sub.sum();
+sub.avg();
 ```

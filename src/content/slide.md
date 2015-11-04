@@ -2,7 +2,7 @@ class: center, middle
 
 # **객체지향 Javascript 기본**
 ***
-`- 자바스크립트 기초 문법 -`
+###`- 자바스크립트 기초 문법 -`
 
 ---
 ## **자바스크립트란?**
@@ -158,7 +158,7 @@ class: center, middle
 ```remark
   /*
       블럭 주석입니다.
-  **/
+　*/
 ```
 
 ---
@@ -239,7 +239,7 @@ class: center, middle
 - 64비트 부동소수점 방식
 - 정수, 실수, 음수, 양수 구별 없음
 - var temp = 15;
--  var temp = 15.3;
+- var temp = 15.3;
 
 ### ▶ 문자열(String)
 - var name = “김철수”;
@@ -311,7 +311,7 @@ class: center, middle
 ## **연산자**
 ***
 ### ▶ 비교 연산자
-- ===/!== : 같은 데이터 타입과 같은 값일 때 참
+- ===/!== : 데이터 타입과 값이 같을 때 참
 - ==/!= : 같은 값일 때 참(데이터 타입 자동 변환)
 ```
     '' == '0'   // 거짓
@@ -345,15 +345,18 @@ class: center, middle
   - 앞의 값이 참이면 뒤의 값 반환
   - 앞의 값이 거짓이면 앞의 값 반환
   - var validId = (id != null) && (id.length > 4);
-- ! (부정)
+- ! (부정) 
   - 참이면 거짓, 거짓이면 참 반환
   - !(10 < 100) -> false
+  - `!!undefined` === false(boolean) 
+
+
+
 
 ---
-
 ## **논리 연산자 사용 예시**
 ***
-### ▶ 크로스 브라우징(IE 8 이벤트 처리)
+### ▶ 크로스 브라우징(IE 8 이벤트 처리)(.bold.red[*])
 ```
 // DOM API
 window.onload = function(){
@@ -365,9 +368,9 @@ window.onload = function(){
 function printPosition(e){
 	e = e || window.event;
 	
-	//if(!e) e = window.event;
+	//if(!e) e = window.event;  ------------ ①
 	// or
-	//if(e == undefined){
+	//if(e == undefined){       ------------ ②
 	//	e = window.event;
 	//}
     
@@ -543,7 +546,7 @@ alert(sum);
 ---
 ## **객체 생성**
 ***
-### ▶ 객체 생성 1
+### ▶ 객체 생성 1 - Object 생성자 함수
 - Object 생성 후 속성과 기능 부여
 - 객체의 속성과 기능에 접근할 때는 dot연산자(.)를 이용하거나 ["속성명"] 표기 사용
 - 
@@ -556,7 +559,7 @@ alert(sum);
  
   score.sum = function (){
         return this.kor + this.eng + this.math;
-  }
+  };
  
   alert(score.kor + "+" + score.eng + "+" + score["math"] + "=" + score.sum());
 ```
@@ -564,7 +567,7 @@ alert(sum);
 ---
 ## **객체 생성**
 ***
-### ▶ 객체 생성 2
+### ▶ 객체 생성 2 - 객체 리터럴
 - JSON(JavaScript Object Notation) 표기법 이용
 - {속성명1: 속성값1, 속성명2: 속성값2, ...}
 - 
@@ -582,15 +585,45 @@ alert(sum);
 ```
 
 ---
+## **객체 프로퍼티 접근하기**
+***
+### ▶ 객체 프로퍼티 읽기/쓰기/갱신
+```
+var foo = {
+    name: 'foo',
+    major: 'computer science'
+};
+
+// 읽기
+console.log(foo.name);          // (출력값) foo
+console.log(foo.['name']);      // (출력값) foo
+console.log(foo.nickname);      // (출력값) undefined
+
+// 갱신
+foo.major = 'electronics engineering';
+console.log(foo.major);         // (출력값) electronics engineering
+console.log(foo.['major']);     // (출력값) electronics engineering
+
+// 동적 생성
+foo.age = 30;
+console.log(foo.age);           // (출력값) 30
+
+// 대괄호 표기법만 사용해야 할 경우
+foo['full-name'] = 'foo bar';
+console.log(foo['full-name']);  // (출력값) foo bar
+console.log(foo.full-name);     // (출력값) NaN
+```
+
+---
 ## **참조형 데이터 타입(Object, 객체)**
 ***
-### ▶ 객체의 모든 속성 접근
+### ▶ 객체의 모든 속성 접근(.bold.red[*])
 - for in 구문
 ```
   for (var key in obj){ ... };
 ```
 
-### ▶ 삭제
+### ▶ 속성 삭제
 - delete 연산자
 ```
   delete obj.name;
@@ -606,6 +639,8 @@ alert(sum);
 ## **참조형 데이터 타입(Array, 배열)**
 ***
 ### ▶ 배열
+- `자바스크립트 객체의 특별한 형태`
+- 어떤 위치에 어느 타입의 데이터를 지정하더라도 에러가 발생되지 않음
 - 하나의 변수에 여러개의 값을 지정하는 데이터 구조
 - index를 이용하여 각 요소를 참조(0부터 시작)
 
@@ -615,7 +650,7 @@ alert(sum);
 ```
   var score = new Array();
 ```
-- JSON 표기법 이용
+- 배열 리터럴
 ```
   var score = [];
 ```
@@ -645,18 +680,124 @@ alert(sum);
 ---
 ## **참조형 데이터 타입(Array, 배열)**
 ***
-### ▶ 배열
+### ▶ 배열 length 프로퍼티(.bold.red[*])
+- 
 ```
-var colorArr = ["orange", "yellow", "blue", "green", "red"];
+// 빈 배열
+var emptyArr = [];
+console.log(emptyArr[0]);       // (출력값) undefined
+　
+// 배열 요소 동적 생성
+emptyArr[0] = 100;
+emptyArr[3] = 'eight';
+emptyArr[7] = true;
+console.log(emptyArr);          // (출력값) [100, 3: "eight", 7: true]
+console.log(emptyArr.length);   // (출력값) 8
+　
+emptyArr.length = 2;
+console.log(emptyArr);          // (출력값) [100]
+```
 
-for(var i=0; i<colorArr.length; i++){
-    console.log(colorArr[i]);
-}
+---
+## **참조형 데이터 타입(Array, 배열)**
+***
+### ▶ 배열과 객체
+- length 프로퍼티 존재 여부
+- 배열 표준 메서드 호출 여부(ex:push())
+- Object.prototype과 Array.prototype
+```
+// 배열
+var colorArr = ["orange", "yellow", "green"];
+console.log(colorArr[0]);       // (출력값) orange 
+console.log(colorArr[1]);       // (출력값) yellow
+console.log(colorArr[2]);       // (출력값) green
+// 객체
+var colorObj = {
+        '0': "orange",
+        '1': "yellow",
+        '2': "green",
+};
+console.log(colorObj[0]);       // (출력값) orange
+console.log(colorObj[1]);       // (출력값) yellow
+console.log(colorObj[2]);       // (출력값) green
+// typeof 연산자 비교
+console.log(typeof colorArr);   // (출력값) object
+console.log(typeof colorObj);   // (출력값) object
+```
 
-// 배열의 값과 메소드까지 모두 출력
-for(var k in colorArr){
-    console.log(colorArr[k]);
+---
+## **참조형 데이터 타입(Array, 배열)**
+***
+### ▶ 배열의 프로퍼터 동적 생성과 열거(.bold.red[*])
+- 배열의 length 프로퍼티는 배열 원소의 가장 큰 인덱스가 변했을 경우만 변경됨
+```
+var arr = ['zero', 'one', 'two'];
+console.log(arr.length);        // (출력값) 3
+　
+arr.color = 'blue';
+arr.name = 'number_array';
+console.log(arr.length);        // (출력값) 3
+　
+arr[3] = 'red';
+console.log(arr.length);        // (출력값) 4   
+// 배열 객체 출력
+　
+// for in
+for (var prop in arr) {
+        console.log(prop, arr[prop]);
 }
+// for
+for (var i=0; i < arr.length; i++) {
+        console.log(i, arr[i]);
+}
+```
+
+---
+## **참조형 데이터 타입(Array, 배열)**
+***
+### ▶ 배열 요소 삭제
+- splice(start, deleteCount, [item]) 배열 메소드 사용
+    - start: 배열의 시작 위치
+    - deleteCount: start에서 지정한 시작 위치부터 삭제할 요소의 수
+    - item: 삭제할 위치에 추가할 요소
+-     
+```
+var arr = ["zero", "one", "two"];
+delete arr[1];                  // ["zero", undefined, "two"]
+console.log(arr.length);        // (출력값) 3   
+```
+```
+var arr = ["zero", "one", "two"];
+*var delArr = arr.splice(2, 1);  // delArr===["two"], arr===["zero", "one"]
+console.log(arr.length);        // (출력값) 2
+```
+
+---
+## **참조형 데이터 타입(Array, 배열)**
+***
+### ▶ 유사 배열 객체(.bold.red[*])
+- length 프로퍼티를 가진 객체
+- apply() 메소드를 사용해서 배열 메서드 호출 가능
+```
+function printArr(arr){
+        for(var i=0; i<arr.length; i++){
+	        console.log(arr[i]); // arr[0], arr[1], arr[2]
+	    }
+}
+　
+var colorArr = ['orange', 'yellow', 'green'];
+printArr(colorArr);
+　
+var colorObj = {
+	    0: 'orange',
+	    1: 'yellow',
+	    2: 'green',
+	    length: 3
+};
+printArr(colorObj);
+　
+*Array.prototype.push.apply(colorObj, ['red']);
+printArr(colorObj);
 ```
 
 ---
