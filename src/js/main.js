@@ -5,7 +5,8 @@ var slideshow = remark.create({
     sourceUrl: 'slide.md',
     highlightLanguage: 'javascript',
     highlightStyle: 'zenburn',
-    highlightLines: true
+    highlightLines: true,
+    countIncrementalSlides: false
 });
 
 
@@ -14,55 +15,59 @@ slideshow.on('beforeShowSlide', function (slide) {
     console.clear();
     switch (slideNum) {
 
-        case 21:
+        case 23:
             console.log("<<<< " + slideNum + "번 슬라이드 예제 실행 결과 >>>");
             slide21();
             break;
-        case 24:
+        case 26:
             console.log("<<<< " + slideNum + "번 슬라이드 예제 실행 결과 >>>");
             var btn = document.getElementById("area");
             //btn.addEventListener("click", slide24, false); // IE8 동작 안함
             btn.onclick = slide24;
             break;
-        case 35:
+        case 37:
             console.log("<<<< " + slideNum + "번 슬라이드 예제 실행 결과 >>>");
             slide35();
             break;
-        case 38:
+        case 40:
             console.log("<<<< " + slideNum + "번 슬라이드 예제 실행 결과 >>>");
             slide38();
             break;
-        case 40:
+        case 42:
             console.log("<<<< " + slideNum + "번 슬라이드 예제 실행 결과 >>>");
             slide40();
             break;
-        case 42:
+        case 44:
             console.log("<<<< " + slideNum + "번 슬라이드 예제 실행 결과 >>>");
             slide42();
             break;
-        case 55:
+        case 57:
             console.log("<<<< " + slideNum + "번 슬라이드 예제 실행 결과 >>>");
             slide55();
             break;
-        case 61:
+        case 63:
             console.log("<<<< " + slideNum + "번 슬라이드 예제 실행 결과 >>>");
             slide61();
             break;
-        case 63:
+        case 65:
             console.log("<<<< " + slideNum + "번 슬라이드 예제 실행 결과 >>>");
             slide63();
             break;
-        case 65:
+        case 67:
             console.log("<<<< " + slideNum + "번 슬라이드 예제 실행 결과 >>>");
             slide65();
             break;
-        case 111:
+        case 69:
             console.log("<<<< " + slideNum + "번 슬라이드 예제 실행 결과 >>>");
-            slide111();
+            slide67();
             break;
-        case 112:
+        case 120:
             console.log("<<<< " + slideNum + "번 슬라이드 예제 실행 결과 >>>");
             slide112();
+            break;
+        case 121:
+            console.log("<<<< " + slideNum + "번 슬라이드 예제 실행 결과 >>>");
+            slide113();
             break;
 
 
@@ -343,7 +348,28 @@ function slide65() {
 
 }
 
-function slide111() {
+function slide67() {
+    console.log("function Person(name, age, gender) {");
+    console.log("    this.name = name;");
+    console.log("    this.age = age;");
+    console.log("    this.gender = gender;");
+    console.log("}");
+    console.log("var foo = {};");
+    console.log("Person.apply(foo, ['foo', 30, 'man']);");
+    console.log("console.dir(foo);");
+    console.log("====================");
+
+    function Person(name, age, gender) {
+        this.name = name;
+        this.age = age;
+        this.gender = gender;
+    }
+    var foo = {};
+    Person.apply(foo, ['foo', 30, 'man']);
+    console.dir(foo);
+}
+
+function slide112() {
     var btn = document.querySelectorAll('.remark-slide-content .btn111');
     for(var i=0; i< 3; i++){
         btn[i].onclick = function(){
@@ -352,7 +378,7 @@ function slide111() {
     }
 }
 
-function slide112() {
+function slide113() {
     var btn = document.querySelectorAll('.remark-slide-content .btn222');
     for(var i=0; i< 3; i++){
         (function (n) {

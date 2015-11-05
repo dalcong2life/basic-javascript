@@ -17,15 +17,19 @@ class: center, middle
 - 동적으로 생성된 프로퍼티를 가질 수 있다.
 
 ### ▶ 자바스크립트의 함수(Function)는 1종 객체
-- 함수 == (객체의기능+호출)
+- 함수 호출
+- 모듈화 처리
+- 클로저
+- 객체 생성
 
 ---
-## **함수 정의1(함수 선언문 방식)**
+## **함수 생성 방법(1/3) - 함수 선언문**
 ***
 ### ▶ function 키워드
 
 ### ▶ 함수 이름
 - 유효한 식별자이어야 함
+- 함수 이름은 필수
 
 ### ▶ 매개변수 목록
 - 쉼표로 구분된 매개변수 목록과 그 매개변수 목록을 둘러싸고있는 괄호 
@@ -43,10 +47,12 @@ function sum(x, y) {
 ```
 
 ---
-## **함수 정의2(함수 리터럴 방식)**
+## **함수 생성 방법(2/3) - 함수 표현식**
 ***
-### ▶ 변수에 익명함수로 지정
-- 
+### ▶ 함수 표현식
+- 함수 리터럴로 함수를 정의하고 변수에 할당하는 방식
+- 선택적 함수 이름(일반적으로 `익명함수`로 사용)
+- 함수 끝 세미콜론(;) 붙이는 것을 권장
 ```javascript
 var add = function(x, y){
         var result = x + y; 
@@ -57,19 +63,19 @@ add(10, 20);
 ```
 
 ### ▶ 변수에 기명함수로 지정
-- 함수 내부에서 재귀호출으로만 사용 가능 
+- 함수 내부에서 `재귀호출`으로만 사용 가능 
 ```
-var add = function sum(x, y){ 
-        var result = x + y;
-        return result;
+var f = function factorial(n){ 
+        if(n <= 1) { return 1; }
+        return n * factorial(n -1);
 };
 　
-add(); ( O ) 
-sum(); ( X )
+console.log(f(5));          // 120
+console.log(factorial(10)); // Uncaught ReferenceError
 ```
 
 ---
-## **함수 정의3(Function() 생성자 함수 이용)**
+## **함수 생성 방법(3/3) - Function 생성자 함수**
 ***
 ### ▶ 함수 객체를 생성해서 반환하는 Function 생성자 함수 이용
 -  
@@ -81,8 +87,8 @@ var add = new Function("x", "y", "var result = x + y; return result;");
 ## **함수 호이스팅**
 ***
 ### ▶ 함수 호이스팅
-- 함수 선언문 형태로 정의한 함수의 유효범위는 코드의 맨 처음부터 시작한다는 특징
-- 
+- `함수 선언문` 으로 정의한 함수의 유효범위는 코드의 맨 처음부터 시작됨
+- 함수 표현식 사용을 권장 
 ```javascript
 console.log(add(2,3)); // ( O )
 　
@@ -231,12 +237,12 @@ this === Object {}
         value: 1,
         func1: function() {
             this.value += 1;
-            console.log('func1() called. this.value : ' + this.value);
+            console.log('func1() called. this.value : ' + this.value); // 2
         
             // 내부 함수
             func2 = function () {
                 this.value += 1;
-                console.log('func2() called. this.value : ' + this.value);
+                console.log('func2() called. this.value : ' + this.value); // 3?
             };
         
             func2();            // ②
@@ -338,6 +344,27 @@ func2() called. this.value : 3
 - 여러개의 매개변수를 가짐
 - 첫 번째 매개변수(p1)에는 this로 사용할 객체를 전달
 - 두 번째 이후의 매개변수(p2, p3, ...)에는 함수에 전달할 인자값을 차례대로 지정
+
+---
+## **함수 호출 방법(3/4)**
+***
+### ▶ apply() 메서드를 이용한 명시적 this 바인딩(.bold.red[*])
+- 
+```
+// 생성자 함수
+function Person(name, age, gender) {
+        this.name = name;
+        this.age = age;
+        this.gender = gender;
+}
+　
+// foo 빈 객체 생성
+var foo = {};
+　
+// apply() 메서드 호출
+Person.apply(foo, ['foo', 30, 'man']);
+console.dir(foo);
+```
 
 ---
 ## **함수 호출 방법(4/4)**
@@ -452,17 +479,20 @@ console.log(kim.age);           // 35
 ---
 ## **익명 함수**
 ***
-### ▶ 익명 함수의 사용처
+### ▶ 익명 함수 사용
 - 함수를 변수에 저장
 - 객체의 메서드로 지정
 - 타임아웃이나 이벤트의 콜백으로 활용
 - 함수가 사용되는 코드가 한번만 나타난다면 불필요한 이름을 지정할 필요 없이 익명 함수로 작성한다.
 ```
 var f1 = function(){};
+　
 var obj = {
         f2: function(){} 
 };
+　
 setTimeout(function(){}, 1000);
+　
 window.onload = function(){};
 ```
 
@@ -796,21 +826,31 @@ obj.calc = function(){
 ---
 ## **프로토타입이란?**
 ***
-### ▶ prototype
+### ▶ prototype 프로퍼티
 - 모든 함수에 기본으로 부여되는 속성
 - 초기값은 비어있는 객체이다.
 - prototype에 추가한 속성은 해당 함수가 생성자로 사용될 때 생성된 인스턴스 에서 내부 링크로 참조되어 사용된다.
 - 결국, prototype은 생성자 함수에서 생성될 객체의 속성과 메소드를 정의하는 역할을 한다.
 ```
-    function Some(a, b){
-        this.a = a;
-        this.b = b;
+    function Person(name, age){
+        this.name = name;
+        this.age = age;
     }
-    Some.prototype = {
-        m1: function(){ ... },
-        m2: function(){ ... } 
+　
+    Person.prototype.getName = function() {
+        return this.name;
     };
+　
+    var foo = new Person('홍길동', 30);
+    console.dir(foo);
 ```
+
+---
+## **프로토타입**
+***
+### ▶ prototype
+![Default-aligned image](img/prototype1.png)
+
 
 ---
 ## **프로토타입과 생성자**
@@ -831,7 +871,6 @@ obj.calc = function(){
 즉, 프로퍼티 참조는 해당 객체에서 먼저 찾고, 실패했을 때 프로토타입을 확인함
 
 ### ▶ constructor
-- 모든 객체에 정의되어 있는 속성
 - 해당 객체를 만드는데 사용된 생성자를 참조
 - 객체가 자신의 프로토타입을 찾는 방법
 - 객체.constructor.prototype
@@ -913,7 +952,9 @@ new Score() instanceof Object           -> true
 - 하위 클래스의 프로토타입을 상위 클래스의 객체로 지정
 - 상위 클래스의 모든 속성을 물려받아 사용할 수 있음
 ```
-function Score(){...}
+function Score(){
+    this.sum = function () {return ...}    
+}
 Score.prototype.avg = function(){};
 　
 function SubScore(){...}
@@ -923,3 +964,41 @@ var sub = new SubScore();
 sub.sum();
 sub.avg();
 ```
+
+---
+```
+function Score() {
+    this.sum = function () {return ...}    
+}
+Score.prototype.avg = function(){};
+```
+![Default-aligned image](img/prototype_chain_1.png)
+
+---
+```
+function SubScore(){...}
+```
+![Default-aligned image](img/prototype_chain_2.png)
+
+---
+
+```
+SubScore.prototype = new Score();
+```
+![Default-aligned image](img/prototype_chain_3.png)
+
+---
+
+```
+SubScore.prototype = new Score();
+```
+![Default-aligned image](img/prototype_chain_4.png)
+
+---
+
+```
+var sub = new SubScore();
+sub.sum();
+sub.avg();
+```
+![Default-aligned image](img/prototype_chain_5.png)

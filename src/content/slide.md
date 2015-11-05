@@ -1,5 +1,29 @@
 class: center, middle
 
+![Default-aligned image](img/wordle-js2.png)
+
+---
+
+.left-column[
+.black[
+    # 목차
+]
+　
+.black[
+    #### - 자바스크립트 기초 문법
+]
+.black[
+    #### - 자바스크립트 함수와 프로토타입
+]
+ 
+#### - 자바스크립트 클로저
+#### - 객체지향 프로그래밍
+]
+
+
+---
+class: center, middle
+
 # **객체지향 Javascript 기본**
 ***
 ###`- 자바스크립트 기초 문법 -`
@@ -742,7 +766,7 @@ arr[3] = 'red';
 console.log(arr.length);        // (출력값) 4   
 // 배열 객체 출력
 　
-// for in
+// for in (순서를 보장하지 못함)
 for (var prop in arr) {
         console.log(prop, arr[prop]);
 }
