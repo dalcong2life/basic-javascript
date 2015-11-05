@@ -204,7 +204,7 @@ this === Window {external: Object, chrome: Object, document: document, ...
 ## **함수 호출 방법(2/4)**
 ***
 ### ▶ 메서드로 호출 
-- 객체에정의된메서드를호출할때
+- 객체에 정의된 메서드를 호출할때
 - 객체.메서드명()
 - this는 메서드를 정의한 객체
     - this는 생성된 객체를 참조하므로 객체에 종속적인 속성을 부여하는게 가능
@@ -311,8 +311,8 @@ func2() called. this.value : 3
                     console.log('func2() called. this.value : ' + this.value);
                 };
             
-    *           func2().call(this, 10, 20);     // ②
-                // func2().apply(this, [10, 20]);   
+    *           func2.call(this, 10, 20);     // ②
+                // func2.apply(this, [10, 20]);   
             }
         };
         myObject.func1();           // ①

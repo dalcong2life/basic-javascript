@@ -15,20 +15,27 @@ var Path = {
     html: 'src/index.html',
     js: 'src/js/main.js',
     css: 'src/css/**/*.css',
+    image: 'src/img/**/*',
     slide: 'src/content/*.md',
     libs: 'src/libs/**/*',
     dist: 'dist',
     distJs: 'dist/js',
     distCss: 'dist/css',
+    distImage: 'dist/img',
     distLibs: 'dist/libs'
 };
 
-gulp.task('server', ['libs', 'uglify', 'minifycss', 'minifyhtml', 'slide'], function () {
+gulp.task('server', ['libs', 'uglify', 'minifycss', 'minifyhtml', 'slide', 'images'], function () {
     return browserSync.init({
         server: {
             baseDir: './dist'
         }
     });
+});
+
+gulp.task('images', function () {
+    return gulp.src(Path.image)
+        .pipe(gulp.dest(Path.distImage));
 });
 
 gulp.task('libs', function () {
@@ -69,7 +76,7 @@ gulp.task('minifyhtml', function () {
 });
 
 
-// ÆÄÀÏ º¯°æ °¨Áö
+// ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 gulp.task('watch', function () {
     gulp.watch(Path.js, ['uglify']);
     gulp.watch(Path.css, ['minifycss']);
