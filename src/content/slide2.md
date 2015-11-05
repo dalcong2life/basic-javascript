@@ -953,7 +953,7 @@ new Score() instanceof Object           -> true
 - 상위 클래스의 모든 속성을 물려받아 사용할 수 있음
 ```
 function Score(){
-    this.sum = function () {return ...}    
+        this.sum = function () {return ...}    
 }
 Score.prototype.avg = function(){};
 　
@@ -966,6 +966,9 @@ sub.avg();
 ```
 
 ---
+## **상속과 프로토타입 체인**
+***
+### ▶ 1. Score 함수 생성 및 prototype에 avg 메서드 추가
 ```
 function Score() {
     this.sum = function () {return ...}    
@@ -975,30 +978,39 @@ Score.prototype.avg = function(){};
 ![Default-aligned image](img/prototype_chain_1.png)
 
 ---
+## **상속과 프로토타입 체인**
+***
+### ▶ 2. SubScore 생성
 ```
 function SubScore(){...}
 ```
 ![Default-aligned image](img/prototype_chain_2.png)
 
 ---
-
+## **상속과 프로토타입 체인**
+***
+### ▶ 3. SubScore의 prototype을 Score.prototype으로 변경
 ```
 SubScore.prototype = new Score();
 ```
 ![Default-aligned image](img/prototype_chain_3.png)
 
 ---
-
-```
-SubScore.prototype = new Score();
-```
-![Default-aligned image](img/prototype_chain_4.png)
-
----
-
+## **상속과 프로토타입 체인**
+***
+### ▶ 4. SubScore로 객체 생성 후 기능 호출
 ```
 var sub = new SubScore();
 sub.sum();
 sub.avg();
 ```
+
+---
+## **상속과 프로토타입 체인**
+***
+### ▶ 최종 결과
 ![Default-aligned image](img/prototype_chain_5.png)
+
+---
+class: center, middle
+![qa](img/q&a.png)
