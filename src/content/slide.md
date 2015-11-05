@@ -10,14 +10,14 @@ class: center, middle
 ]
 　
 .black[
-    #### - 자바스크립트 기초 문법
+    #### 1. 자바스크립트 기초 문법
 ]
 .black[
-    #### - 자바스크립트 함수와 프로토타입
+    #### 2. 자바스크립트 함수와 프로토타입
 ]
  
-#### - 자바스크립트 클로저
-#### - 객체지향 프로그래밍
+#### 3. 자바스크립트 클로저
+#### 4. 객체지향 프로그래밍
 ]
 
 
@@ -566,6 +566,22 @@ alert(sum);
 - 속성의 값으로 모든 데이터 타입 지정 가능
   - 값으로 함수가 지정된 속성을 메소드(method)라 함
 - 여러개의 속성을 포함할 수 있음
+```
+    var person = {
+        kor: 100,
+        eng: 80,
+        math: 90,
+        sum: function () {
+            return this.kor + this.eng + this.math;
+        },
+        grade: [1,2,3],
+        '': 'empty attr',
+        'var': 'reserve keyword',
+        'full-name': '홍길동',
+        nick_name: '번쩍'
+    };
+```
+
 
 ---
 ## **객체 생성**
@@ -836,7 +852,7 @@ printArr(colorObj);
   	실행할 구문1;
   	실행할 구문2;
   	......
-  	return 반환값;
+  	return 반환값;     // 리턴 문 생략되더라도 'undefined'가 반환됨
   }
 ```
 
@@ -868,11 +884,11 @@ printArr(colorObj);
 ## **변수 스코프**
 ***
 ```
-var sum = 10;         // 전역 변수
-age = 30;             // 전역 변수
+var sum = 10;           // 전역 변수: window.sum
+age = 30;               // 전역 변수: window.age
 function rangeSum(num){	
 *   var sum = 20;       // 지역 변수
-    (window.)count = 0; // 전역 변수
+    count = 0;          // 전역 변수: window.count
     alert(sum);
 }
 ```
