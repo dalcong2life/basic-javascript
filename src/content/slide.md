@@ -8,16 +8,14 @@ class: center, middle
 .black[
     # 목차
 ]
-　
-.black[
-    #### 1. 자바스크립트 기초 문법
-]
+
+#### 1. 자바스크립트 기초 문법 (11/6)
 .black[
     #### 2. 자바스크립트 함수와 프로토타입
 ]
  
-#### 3. 자바스크립트 클로저
-#### 4. 객체지향 프로그래밍
+#### 3. 클로저와 객체지향 프로그래밍
+#### 4. 함수형 프로그래밍
 ]
 
 
@@ -193,14 +191,14 @@ class: center, middle
 ### ▶ 프로그램에 직접 나타나는 데이터 값
 - 10
 - 3.14
-- “Hello”
+- "Hello"
 - 'World'
 - true
 - false
 - /,\s*/
 - null
 - [10, 20]
-- {name: “김철수”, age: 30}
+- {name: "김철수", age: 30}
 
 
 ---
@@ -244,17 +242,17 @@ class: center, middle
 ### ▶ 강형(strongly typed) 언어
 - 변수 선언시 데이터 타입을 지정하는 언어(C++, Java 등의 주류언어)
 - 자바의 예
-  - String name = “홍길동”;
+  - String name = "홍길동";
   - int age = 30;
-  - ~~name = “김철수”;~~
+  - ~~name = "김철수";~~
 
 ### ▶ 약형(weakly typed) 언어
 - 변수를 선언하지 않고 쓰거나 선언시 데이터 타입을 지정하지 않는 언어
 - 값에 따라서 자동으로 데이터 타입이 결정됨
 - 자바스크립트의 예
-  - var name = “홍길동”; 
+  - var name = "홍길동"; 
   - var age = 30;
-  - name = “김철수”;  
+  - name = "김철수";  
 
 ---
 ## **기본 데이터 타입**
@@ -266,11 +264,12 @@ class: center, middle
 - var temp = 15.3;
 
 ### ▶ 문자열(String)
-- var name = “김철수”;
+- var name = "김철수";
 - var name = ‘김철수’;
-- var msg = “김철수가 ‘안녕’ 이라고 말했다.”; 
-- ~~var msg = “김철수가 “안녕” 이라고 말했다.”;~~
-- var msg = “김철수가 \“안녕\” 이라고 말했다.”;
+- var msg = "김철수가 ‘안녕’ 이라고 말했다."; 
+- ~~var msg = "김철수가 "안녕" 이라고 말했다.";~~
+- var msg = "김철수가 \"안녕\" 이라고 말했다.";
+- name[0], msg[1] : 한 번 생성된 문자열은 읽기만 가능 수정은 불가능.
 
 ### ▶ 논리값(Boolean)
 - 참(true) 또는 거짓(false) 둘 중 하나의 값을 가지는 데이터
@@ -290,6 +289,11 @@ class: center, middle
 - 개발자가 명시적으로 값이 비어있음을 지정
 - 데이터 타입은 `Object`가 된다.
 - var nullVar = null;
+- null 타입 변수인지를 확인 할 때는 일치 연산자(===)를 사용
+```
+    console.log(typeof nullVar === null);   // false
+    console.log(nullVar === null);          // true
+```
 
 ---
 ## **연산자**
@@ -301,7 +305,7 @@ class: center, middle
 - (1 + 4) * 5
 - .bold.red[*]`9 / 4 = 2.25`, 정수 필요 시 Math.floor, Math.round 메소드 사용
 - 9 % 4
-- “나이는 “ + age + “ 입니다.”; (결합 연산자)
+- "나이는 " + age + " 입니다."; (결합 연산자)
 
 ### ▶ 대입 연산자
 - 우측 항목을 계산한 후 좌측 항목에 대입(=, +=, -=, *=, /=)
@@ -588,7 +592,7 @@ alert(sum);
 ***
 ### ▶ 객체 생성 1 - Object 생성자 함수
 - Object 생성 후 속성과 기능 부여
-- 객체의 속성과 기능에 접근할 때는 dot연산자(.)를 이용하거나 ["속성명"] 표기 사용
+- 객체의 속성과 기능에 접근할 때는 마침표(.) 표기법 또는 대괄호([]) 표기 사용
 - 
 ```javascript
   var score = new Object();                               
@@ -636,13 +640,13 @@ var foo = {
 
 // 읽기
 console.log(foo.name);          // (출력값) foo
-console.log(foo.['name']);      // (출력값) foo
+console.log(foo['name']);      // (출력값) foo
 console.log(foo.nickname);      // (출력값) undefined
 
 // 갱신
 foo.major = 'electronics engineering';
 console.log(foo.major);         // (출력값) electronics engineering
-console.log(foo.['major']);     // (출력값) electronics engineering
+console.log(foo['major']);     // (출력값) electronics engineering
 
 // 동적 생성
 foo.age = 30;

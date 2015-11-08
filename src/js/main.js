@@ -1,6 +1,6 @@
 var slideshow = remark.create({
     navigation: {
-        scroll: true
+        scroll: false
     },
     sourceUrl: 'slide.md',
     highlightLanguage: 'javascript',
@@ -61,13 +61,15 @@ slideshow.on('beforeShowSlide', function (slide) {
             console.log("<<<< " + slideNum + "번 슬라이드 예제 실행 결과 >>>");
             slide67();
             break;
-        case 120:
+
+        // 3부
+        case 123:
             console.log("<<<< " + slideNum + "번 슬라이드 예제 실행 결과 >>>");
-            slide112();
+            slide123();
             break;
-        case 121:
+        case 124:
             console.log("<<<< " + slideNum + "번 슬라이드 예제 실행 결과 >>>");
-            slide113();
+            slide124();
             break;
 
 
@@ -369,7 +371,7 @@ function slide67() {
     console.dir(foo);
 }
 
-function slide112() {
+function slide123() {
     var btn = document.querySelectorAll('.remark-slide-content .btn111');
     for(var i=0; i< 3; i++){
         btn[i].onclick = function(){
@@ -378,7 +380,7 @@ function slide112() {
     }
 }
 
-function slide113() {
+function slide124() {
     var btn = document.querySelectorAll('.remark-slide-content .btn222');
     for(var i=0; i< 3; i++){
         (function (n) {

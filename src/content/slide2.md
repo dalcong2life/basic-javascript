@@ -7,20 +7,20 @@ class: center, middle
 ###`- 자바스크립트 함수와 프로토타입 -`
 
 ---
-## **First-class objects**
+## **1급 객체(First-class objects)**
 ***
-### ▶ 1종 객체(First-class object)
+### ▶ 1급 객체(First-class object)
 - 변수, 배열 엘리먼트, 다른 객체의 프로퍼티에 할당될 수 있다. 
 - 함수의 인자로 전달 될 수 있다.
 - 함수의 결과값으로 반환 될 수있다.
 - 리터럴로 생성 될 수 있다.
 - 동적으로 생성된 프로퍼티를 가질 수 있다.
 
-### ▶ 자바스크립트의 함수(Function)는 1종 객체
+### ▶ 자바스크립트의 함수(Function)는 1급 객체
 - 함수 호출
+- `객체 생성`
 - 모듈화 처리
 - 클로저
-- 객체 생성
 
 ---
 ## **함수 생성 방법(1/3) - 함수 선언문**
@@ -120,9 +120,9 @@ console.log(add(3, 4)); // ( O )
 ## **함수 호출 시 인자의 수**
 ***
 ### ▶ 매개변수와 인자의 수
-- 함수에 정의한 매개변수와 함수 호출에 사용되는 인자의 수가 달라도 에러 가 발생하지는 않음
+- 함수에 정의한 매개변수와 함수 호출에 사용되는 인자의 수가 달라도 에러가 발생하지 않음
 
-### ▶ 매개변수 > 인자
+### ▶ 매개변수가 호출 시 사용되는 인자 수 보다 많을 경우
 - 부족한 인자에 대한 매개변수에는 undefined가 지정됨
 ```
 function add(x, y) {
@@ -131,7 +131,7 @@ function add(x, y) {
 add(3);         // NaN
 ```
 
-### ▶ 매개변수 < 인자
+### ▶ 매개변수가 호출 시 사용되는 인자 수 보다 작을 경우
 - 남는 인자에 대해서는 처리할 매개변수가 없기 때문에 무시됨
 ```
 function add(x, y) {
@@ -144,22 +144,24 @@ add(3, 4, 5);   // 7
 ## **암묵적 매개변수**
 ***
 ### ▶ 모든 함수가 호출될 때 암묵적으로 넘어오는 매개변수
-- `arguments`, `this`
+- .red[arguments]
+- .red[this]
 
-### ▶ arguments 매개변수
-- 함수 내에서 arguments 변수로 접근 가능
-- 함수에 전달된 모든 인자들을 담고 있는 유사배열객체(Array는 아님)
-- 배열과 비슷하게 length 속성과 index로 각 인자에 접근 가능
+### ▶ arguments 객체
+- 유사배열객체 (Array는 아님)
+- 함수를 호출할 때 넘겨진 인자(배열 형태): index로 접근 가능 
+- length: 호출할 때 넘겨진 인자의 개수
+- callee: 현재 실행 중인 함수의 참조값
 
 ### ▶ this 매개변수
 - 함수내에서 this 변수로 접근가능
-- `함수 컨텍스트` 객체
-- 함수를 호출한 객체에 대한 참조 
+- 함수 컨텍스트 객체
+- `함수를 호출한 객체에 대한 참조` 
 
 ---
 ## **암묵적 매개변수**
 ***
-### ▶ arguments
+### ▶ arguments(.bold.red[*])
 ```
 function sum() {
     var result = 0;
@@ -183,11 +185,13 @@ console.log(sum(1,2,3,4,5,6,7,8,9));    // (출력값) 45
     - window 객체는 어디서나 참조 가능하므로 this를 사용할 필요 없음
 - 
 ```remark
+// 함수 선언문
 function f1(){
         console.log(this);
 }; 
 f1();
 　
+// 함수 표현식
 var f2 = function(){
         console.log(this);
 }; 
@@ -329,14 +333,14 @@ func2() called. this.value : 3
 ## **함수 호출 방법(3/4)**
 ***
 ### ▶ apply(), call() 메서드로 호출
-- 함수(Function 클래스)에 정의된 메서드
+- Function.prototype 객체에 정의된 메서드
 - 함수.apply(), 함수.call() 형태로 호출
 - `this는 apply(), call() 메소드의 첫번째 인자로 전달되는 객체`
 - this를 명시적으로 지정할 수 있음
 - 콜백 함수 호출 시 주로 사용
       
 ### ▶ apply(p1, p2) 메서드
-- 두개의 매개변수를 가짐
+- 두 개의 매개변수를 가짐
 - 첫 번째 매개변수(p1)에는 this로 사용할 객체를 전달
 - 두 번째 매개변수(p2)에는 함수에 전달할 인자값 배열
       
@@ -375,7 +379,7 @@ console.dir(foo);
 - `this는 생성자를 통해 생성된 객체`
       
 ### ▶ 생성자로 호출될 때의 내부 동작
-- 비어 있는 객체를 새로생성
+- 비어 있는 객체를 새로 생성
 - 새로 생성된 객체는 this 매개변수로 생성자 함수에 전달
 - 명시적으로 반환하는 객체가 없다면 생성된 객체를 반환
 - 객체지향 프로그램의 new 연산자와 비슷한 동작
@@ -435,7 +439,7 @@ console.log(window.age);            // 35
 ```
 function Person(name, age){
 *   if(!(this instanceof Person)) { // or 'this instanceof arguments.callee'
-*       return new Person(name, age);
+*       return new Person(name, age); // or 'new Person(arguments)'
 *   }
 　
 	this.name = name;
@@ -521,84 +525,13 @@ someFunction(function(){
 ***
 ### ▶ 배열의 push() 메서드 기능
 - 배열의 마지막에 지정한 요소를 추가한다.
-- `this`로 지정된 Array 객체의 length 속성값에 해당하는 속성을 만들고 지정한 요소를 저장한 후 length를 하나 증가시킨다.
+- this로 지정된 Array 객체의 length 속성값에 해당하는 속성을 만들고 지정한 요소를 저장한 후 length를 하나 증가시킨다.
       
 ### ▶ Array의 push() 메서드를 이용하여 객체를 배열처럼 동작시키기
-- length 속성 추가
-- Array.prototype.push.call(`객체`, 추가할 요소)
-      
-### ▶ prototype
-- 생성자에 정의된 속성과 메서드를 관리하는 속성
-- 모든 객체에 자동으로 할당됨
+- 객체에 length 속성 추가
+- Array.prototype.push.call(객체, p1, p2)
+- Array.prototype.push.apply(객체, [p1, p2])
 
----
-## **연산 결과를 기억하는 함수**
-***
-### ▶ 메모이제이션(memoization)
-- 이전의계산결과를기억하는기능을갖춘함수
-- 함수는 객체이기 때문에 함수의 속성값으로 계산 결과 캐시
-- 함수에 종속된 속성을 이용하기 때문에 외부에 노출하지 않고 함수 자체적 으로구현가능
-
-### ▶ 장점
-- 이미 수행한 복잡한 연산을 반복하지 않도록 함으로서 성능을 향상
-- 사용자가 알수 없게 내부적으로만 동작
-      
-### ▶ 단점
-- 캐시에필요한메모리사용량증가
-- 비즈니스로직과캐싱기능의혼재
-- 부하 테스트나 알고리즘의 성능 테스트가 어려워짐
-
----
-## **연산 결과를 기억하는 함수**
-***
-### ▶ 메모이제이션(memoization) 예시
-- 
-```javascript
-    function isPrime(num){
-        if(!isPrime.answer) isPrime.answer = {};
-        if(isPrime.answer[num] != undefined){
-            return isPrime.answer[num];
-        }
-        var prime = true;
-        for(var i=2; i<=num/2; i++){
-            if(num % i == 0){
-                prime = false;
-                break;
-            }
-        }
-        
-        return isPrime.answer[num] = prime;
-    }
-    
-    var start = new Date().getTime();
-    console.log(3, isPrime(3));
-    console.log(4, isPrime(4));
-    console.log(1000000007, isPrime(1000000007));
-    console.log(1000000007, isPrime(1000000007));
-    console.log(1000000007, isPrime(1000000007));
-    var finish = new Date().getTime();
-    console.log("소요시간", finish-start + "ms");
-```
-
-???
-function isPrime(num){
-    var prime = true;
-    for(var i=2; i<=num/2; i++){
-        if(num % i == 0){
-            prime = false;
-            break;
-        }
-    }
-    return prime;
-}
-var start = new Date().getTime();
-console.log(3, isPrime(3));
-console.log(4, isPrime(4));
-console.log(1000000007, isPrime(1000000007));
-console.log(1000000007, isPrime(1000000007));
-console.log(1000000007, isPrime(1000000007));
-var finish = new Date().getTime();
-console.log("소요시간", finish-start + "ms");
 
 ---
 ## **가변 길이 인자 전달**
@@ -610,14 +543,151 @@ console.log("소요시간", finish-start + "ms");
       
 ### ▶ apply() 활용
 - 배열 데이터를 각각의 매개변수로 분리하여 전달할 때
+```
+    Math.min(10, 20, 30, 40)        // 10
+    Math.max(100, 200, 300,400)     // 400
+　
+    var arr = [e1, e2, e2, ...];
+    Math.min(arr[0], arr[1], arr[2], ...???)
+　   
+    Math.min.apply(Math, arr)
+```
+---
+## **즉시실행함수**
+***
 
-        Math.min(n1, n2, n3, ...)
-        Math.max(n1, n2, n3, ...)
-        
-        var a = [e1, e2, e2, ...];
-        Math.min(a[0], a[1], a[2], ...???)
-        
-        Math.min.apply(Math, a)
+### ▶ 즉시실행함수(Immediate function)
+- 함수를 정의함과 동시에 바로 실행하는 함수
+
+### ▶ 코드 실행 순서
+- 함수 인스턴스를 생성한다.
+- 함수를 실행한다.
+- 함수를 폐기한다.(실행을 마치고 나면 더 이상 이 함수를 참조할 수 없음)
+```
+(function(){
+		var msg = "함수 호출";
+		console.log(msg);
+})();
+```
+```
+(function(msg){
+		console.log(msg);
+})("함수 호출");
+```
+
+---
+## **즉시실행함수 용법 1/5**
+***
+
+### ▶ 임시 유효 범위와 private 변수 
+- 코드를 함수로 감싸고 호출하면 해당 코드의 유효 범위가 함수로 제한
+- 함수 내에서 사용하는 변수는 외부에 노출되지 않으므로 외부 변수와 충돌이 발생하지 않는다.
+- 즉, 외부에서 접근할 수 없는 독립적인 공간을 확보할 수 있음
+- 특정 코드 블럭을 독립적인 모듈로 사용할 수 있음
+```
+var count = 0;
+var sum = 100;
+var avg = 0;
+// ……
+/////////////////////////////////////////
+　
+		var sum = 0;
+		for(var i=1; i<=100; i++){
+			sum += i;
+		}
+		console.log(sum);	
+　	
+/////////////////////////////////////////
+```
+
+---
+## **즉시실행함수 용법 1/5**
+***
+
+### ▶ 임시 유효 범위와 private 변수
+- 
+```
+var count = 0;
+var sum = 100;
+var avg = 0;
+// ……
+/////////////////////////////////////////
+		(function(){
+			var sum = 0;
+			for(var i=1; i<=100; i++){
+				sum += i;
+			}
+			console.log(sum);	
+		})();
+/////////////////////////////////////////
+```
+
+---
+## **즉시실행함수 용법 2/5**
+***
+
+### ▶ 매개변수 활용
+- 
+```
+jQuery.ajax({
+		url: "time.jsp",
+		success: function(result){
+			console.log(result);
+		}
+});
+```
+```
+(function($){
+		$.ajax({
+			url: "time.jsp",
+			success: function(result){
+				console.log(result);
+			}
+		});
+})(jQuery);
+```
+
+---
+## **즉시실행함수 용법 3/5**
+***
+
+### ▶ 변수명 대체
+- Some.long.reference.to.something 같은 복잡한 참조 관계를 짧은 변수로 대체
+```
+function(v) {
+		Object.extend(v, {
+			href : v._getAttr2,
+			src : v._getAttr2,
+			......
+			onchange : v._getEv
+		});
+})(Element._attributeTranslations.read.values);
+```
+
+---
+## **즉시실행함수 용법 4/5**
+***
+
+### ▶ 라이브러리 래핑
+- 자바스크립트 라이브러리 개발 시 임시 변수들을 즉시실행함수 내부에 묶어놓음으로써 전역 네임스페이스를 더럽히지 않는다.
+- 여러 라이브러리를 로딩하면서 발생하는 이름 충돌을 막을 수 있다.
+- jQuery의 사용 예
+```
+(function(){
+		var jQuery = window.jQuery = function(){
+			// 초기화
+			...
+		};
+})();
+```
+
+---
+## **즉시실행함수 용법 5/5**
+***
+
+### ▶ 클로저 다음에 설명
+
+
 ---
 ## **함수 오버로딩**
 ***
@@ -828,8 +898,8 @@ obj.calc = function(){
 ***
 ### ▶ prototype 프로퍼티
 - 모든 함수에 기본으로 부여되는 속성
-- 초기값은 비어있는 객체이다.
-- prototype에 추가한 속성은 해당 함수가 생성자로 사용될 때 생성된 인스턴스 에서 내부 링크로 참조되어 사용된다.
+- 함수가 생성될 때 만들어지고, constructor 프로퍼티 하나만 있는 객체
+- prototype에 추가한 속성은 해당 함수가 생성자로 사용될 때 생성된 인스턴스에서 내부 링크로 참조되어 사용된다.
 - 결국, prototype은 생성자 함수에서 생성될 객체의 속성과 메소드를 정의하는 역할을 한다.
 ```
     function Person(name, age){
@@ -897,30 +967,32 @@ obj.calc = function(){
       
 ### ▶ Number 기능 추가
 - Number 객체의 확장된 속성을 사용할 때 변수에 담지 않고 리터럴로 직접 사용불가
-- Number.prototype.add = function(n){...};
 ```
-var a=10; a.add(20);    // (O)
-10.add(20);             // (X)    
+Number.prototype.add = function(n){
+        return this + n;
+};
+　
+var a = 10;
+a.add(20);    // (O)
+10.add(20);   // (X)    
 ```
 
-### ▶ 네이티브 클래스 상속
-- Array.length 속성이 수정안되는 IE(8이하) 버그 같은 문제 발생
-- 상속 보다는 위임으로 구현
 
 ---
 ## **생성자와 객체 타입**
 ***
 ### ▶ typeof 연산자
 - 객체의 타입을 반환
-```
-typeof "hello"      -> "string"
-typeof 10           -> "number"
-typeof true         -> "boolean"
-typeof []           -> "object"
-typeof {}           -> "object“
-typeof new Score()  -> "object"
-```
 - 기본 데이터 타입을 제외한 모든 인스턴스에 대해 object 반환
+```
+typeof "hello"      // "string"
+typeof 10           // "number"
+typeof true         // "boolean"
+typeof []           // "object"
+typeof {}           // "object“
+typeof new Score()  // "object"
+```
+
 
 ---
 ## **생성자와 객체 타입**
@@ -930,19 +1002,20 @@ typeof new Score()  -> "object"
 - 기본 데이터타입의 리터럴 표현은 객체가 아니므로 생성자 함수가 없다.
 - JSON 표기법으로 생성한 배열이나 객체는 내부적으로 Array, Object 생성자 함수를 통해 생성이 된다.
 ```
-10 instanceof Number                    -> false
-"hello" instanceof String               -> false
-true instanceof Boolean                 -> false
-//
-new Number(10) instanceof Number        -> true 
-new String("hello") instanceof String   -> true
-new Boolean() instanceof Boolean        -> true
-new Array() instanceof Array            -> true
-[] instanceof Array                     -> true
-new Object() instanceof Object          -> true
-var obj={}; obj instanceof Object       -> true
-new Score() instanceof Score            -> true
-new Score() instanceof Object           -> true
+10 instanceof Number                    // false
+"hello" instanceof String               // false
+true instanceof Boolean                 // false
+　
+new Number(10) instanceof Number        // true 
+new String("hello") instanceof String   // true
+new Boolean() instanceof Boolean        // true
+new Array() instanceof Array            // true
+[] instanceof Array                     // true
+　
+new Object() instanceof Object          // true
+var obj={}; obj instanceof Object       // true
+new Score() instanceof Score            // true
+new Score() instanceof Object           // true
 ```
 
 ---
