@@ -791,11 +791,10 @@ overloading(obj, "calc", function(n1, n2, n3){      // ④
 ```
 // 최초 호출
 var oldfn = undefined;
+　
 obj.calc = function(){
 	if(0 == arguments.length){
-		return function(){
-			return "인자값이 없습니다.";
-		};
+		return "인자값이 없습니다.";
 	}
 };
 ```
@@ -808,24 +807,17 @@ obj.calc = function(){
 // 두번째 호출
 var oldfn = function(){
 	if(0 == arguments.length){
-		return function(){
-			return "인자값이 없습니다.";
-		};
+		return "인자값이 없습니다.";
 	}
 };
+　
 obj.calc = function(){
 	if(1 == arguments.length){
-		return function(n1){
-			return n1 * n1;
-		};
+		return n1 * n1;
 	} else if(typeof oldfn == "function"){
-		return function(){
-			if(0 == arguments.length){
-				return function(){
-					return "인자값이 없습니다.";
-				};
-			}
-		};
+        if(0 == arguments.length){
+            return "인자값이 없습니다.";
+        }
 	}
 };
 ```
@@ -836,27 +828,27 @@ obj.calc = function(){
 ### ▶ 함수 오버로딩 기법 2 - 3
 ```
 // 세번째 호출
+var oldfn = function(){
+    if(1 == arguments.length){
+        return n1 * n1;
+    } else if(typeof oldfn == "function"){
+        if(0 == arguments.length){
+            return "인자값이 없습니다.";
+        }
+    }
+};
+　
 obj.calc = function(){
 	if(2 == arguments.length){
-		return function(n1, n2){
-			return n1 + n2;
-		};
+		return n1 + n2;
 	}else if(typeof oldfn == "function"){
-		return function(){
-			if(1 == arguments.length){
-				return function(n1){
-					return n1 * n1;
-				};
-			}else if(typeof oldfn == "function"){
-				return function(){
-					if(0 == arguments.length){
-						return function(){
-							return "인자값이 없습니다.";
-						};
-					}
-				};
-			}
-		};
+        if(1 == arguments.length){
+            return n1 * n1;
+        }else if(typeof oldfn == "function"){
+            if(0 == arguments.length){
+                return "인자값이 없습니다.";
+            }
+        }
 	}
 };
 ```
@@ -869,28 +861,21 @@ obj.calc = function(){
 // 네번째 호출
 obj.calc = function(){
 	if(3 == arguments.length){
-		return function(n1, n2, n3){
-			return Math.max(n1, n2, n3);
-		};
-	}else{
-		return function(){
-			if(2 == arguments.length){
-				return function(n1, n2){
-					return n1 + n2;
-				};
-			}else{
-				return function(){
-					if(1 == arguments.length){
-						return function(n1){
-							return n1 * n1;
-						};
-					}else{
-						return function(){
-							if(0 == arguments.length){
-								return function(){
-									return "인자값이 없습니다.";
-								};
-...
+		return Math.max(n1, n2, n3);
+	} else {
+        if(2 == arguments.length) {		
+            return n1 + n2;
+        }else{
+            if(1 == arguments.length){
+                return n1 * n1;
+            }else{
+                if(0 == arguments.length){
+                    return "인자값이 없습니다.";
+                };
+            }
+        }
+    }
+};
 ```
 
 ---
