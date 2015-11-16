@@ -1,3 +1,7 @@
+remark.macros.scale = function (percentage) {
+    return '<img src="' + this + '" style="width: ' + percentage + '" />';
+};
+
 var slideshow = remark.create({
     navigation: {
         scroll: false
@@ -71,7 +75,15 @@ slideshow.on('beforeShowSlide', function (slide) {
             console.log("<<<< " + slideNum + "번 슬라이드 예제 실행 결과 >>>");
             slide124();
             break;
+        case 173:
+            console.log("<<<< " + slideNum + "번 슬라이드 예제 실행 결과 >>>");
+            var MathModule  = require('./module.js')();
 
+            console.log("10 + 5 = " + MathModule.plus(10, 5));
+            console.log("10 - 5 = " + MathModule.minus(10, 5));
+            console.log("10 * 5 = " + MathModule.times(10, 5));
+            console.log("10 / 5 = " + MathModule.divide(10, 5));
+            break;
 
     }
 });
