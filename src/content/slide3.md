@@ -6,12 +6,17 @@ class: center, middle
 ###`- 클로저와 객체지향 프로그래밍 -`
 
 ---
+class: center, middle
+
+## **클로저**
+***
+
+---
 ## **클로저는 어떻게 동작하는가?**
 ***
 
 ### ▶ 클로저란?
-- 함수를 선언할 때 만들어지는 유효 범위
-- 함수가 선언되는 시점에 접근할 수 있는 모든 변수를 포함하는 유효 범위
+- 이미 생명 주기가 끝난 외부 함수의 변수를 참조하는 함수
 - 클로저로 인해 유효 범위가 사라진  변수와 함수를 사용할 수 있고, 변수의 경우 그 값을 변경할 수도 있다.
 ```
     var later;
@@ -103,7 +108,7 @@ console.log(c.getCount());	// 2
 
 ### ▶ 부분 적용 함수
 - 함수가 실행 되기 전에 인자를 미리 설정하는 기술
-- 미리 정의된 인자를 가진 새로운 함수를 반환하고(커링, currying) 실제 호출 할 때에는 이렇게 반환된 프록시 함수가 사용됨
+- 미리 정의된 인자를 가진 새로운 함수를 반환하고(`커링`, currying) 실제 호출 할 때에는 이렇게 반환된 프록시 함수가 사용됨
 - Prototype.js의 curry() 메서드
 - Functional.js의 partial() 메서드	
 
@@ -118,6 +123,7 @@ console.log(c.getCount());	// 2
 Function.prototype.curry = function(){
 		var fn = this;
 		var args = Array.prototype.slice.call(arguments);
+　
 		return function(){
 			var concatArgs = args.concat(Array.prototype.slice.call(arguments));
 			return fn.apply(this, concatArgs); 
@@ -125,7 +131,8 @@ Function.prototype.curry = function(){
 };
 ```
 ```
-Math.maxAbove500 = Math.max.curry(500); 
+Math.maxAbove500 = Math.max.curry(500);
+　
 console.log(Math.maxAbove500(10, 20, 30));	// 500
 console.log(Math.maxAbove500(10, 2000, 30));  // 2000	
 ```
@@ -160,7 +167,7 @@ delay(function(){
 });
 ```
 
---
+---
 
 ## **연산 결과를 기억하는 함수**
 ***
@@ -198,10 +205,8 @@ delay(function(){
                 break;
             }
         }
-        
         return isPrime.answer[num] = prime;
     }
-    
     var start = new Date().getTime();
     console.log(3, isPrime(3));
     console.log(4, isPrime(4));
@@ -254,9 +259,20 @@ Function.prototype.memoized = function(key) {
 		return this._values[key] !== undefined ?
 			this._values[key] : this._values[key] = this.apply(this, arguments);
 };
+　　
+function isPrime(num){
+		var prime = true;
+		for(var i=2; i<=num/2; i++){
+			if(num % i == 0){
+				prime = false;
+				break;
+			}
+		}
+		return prime;
+}
 　
-someFunction.memoized(arg1);
-someFunction.memoized(arg1);
+isPrime.memoized(1000000007);
+isPrime.memoized(1000000007);
 ```
 
 ---
@@ -274,11 +290,29 @@ Function.prototype.memoize = function(){
 		};
 };
 　
-var someFunction = (function(){ ... }).memoize();
+var memoIsPrime = isPrime.memoize();
 　
-someFunction(arg1); 
-someFunction(arg1); 
+memoIsPrime(1000000007); 
+memoIsPrime(1000000007); 
 ```
+
+???
+Function.prototype.memoized = function(key) {
+		this._values = this._values || {};
+		return this._values[key] !== undefined ?
+			this._values[key] : this._values[key] = this.apply(this, arguments);
+};
+　　
+function isPrime(num){
+		var prime = true;
+		for(var i=2; i<=num/2; i++){
+			if(num % i == 0){
+				prime = false;
+				break;
+			}
+		}
+		return prime;
+}
 
 ---
 ## **즉시실행함수 용법 5/5**
@@ -321,6 +355,77 @@ for(var i=0; i < btn.size(); i++){
 <button class="btn222">버튼2</button>
 <button class="btn222">버튼3</button>
 
+---
+class: center, middle
+
+## **객체지향 프로그래밍**
+***
+
+---
+## **상속과 프로토타입 체인**
+***
+### ▶ 프로토타입 체인을 이용한 상속 기능 구현
+- 하위 클래스의 프로토타입을 상위 클래스의 객체로 지정
+- 상위 클래스의 모든 속성을 물려받아 사용할 수 있음
+```
+function Score(){
+        this.sum = function () {return ...}    
+}
+Score.prototype.avg = function(){};
+　
+function SubScore(){...}
+SubScore.prototype = new Score();
+　
+var sub = new SubScore();
+sub.sum();
+sub.avg();
+```
+
+---
+## **상속과 프로토타입 체인**
+***
+### ▶ 1. Score 함수 생성 및 prototype에 avg 메서드 추가
+```
+function Score() {
+    this.sum = function () {return ...}    
+}
+Score.prototype.avg = function(){};
+```
+![Default-aligned image](img/prototype_chain_1.png)
+
+---
+## **상속과 프로토타입 체인**
+***
+### ▶ 2. SubScore 생성
+```
+function SubScore(){...}
+```
+![Default-aligned image](img/prototype_chain_2.png)
+
+---
+## **상속과 프로토타입 체인**
+***
+### ▶ 3. SubScore의 prototype을 Score.prototype으로 변경
+```
+SubScore.prototype = new Score();
+```
+![Default-aligned image](img/prototype_chain_3.png)
+
+---
+## **상속과 프로토타입 체인**
+***
+### ▶ 4. SubScore로 객체 생성 후 기능 호출
+```
+var sub = new SubScore();
+sub.sum();
+sub.avg();
+```
+
+---
+## **상속과 프로토타입 체인**
+***
+### ▶ 최종 결과
+![Default-aligned image](img/prototype_chain_5.png)
 
 ---
 ## **객체지향 프로그래밍**
@@ -349,9 +454,6 @@ var me = new Person('me');
 var you = new Person('you');
 var him = new Person('him');
 ```
-
----
-그림 추가 장표 필요
 
 ---
 ## **객체지향 프로그래밍**
@@ -516,7 +618,6 @@ Person.prototype.getName = function() {
 Person.prototype.setName = function(value) {
 		this.name = value;
 };
-　
 var Student = function(name) {
 		Person.apply(this, arguments);
 };

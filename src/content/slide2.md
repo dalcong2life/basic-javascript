@@ -1069,6 +1069,3 @@ sub.avg();
 ### ▶ 최종 결과
 ![Default-aligned image](img/prototype_chain_5.png)
 
----
-class: center, middle
-![qa](img/q&a.png)

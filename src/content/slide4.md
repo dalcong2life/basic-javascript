@@ -19,7 +19,7 @@ class: center, middle
 # `let` 
 
 ---
-## **let: Block scope**
+## **.red[\*let]: Block scope**
 ***
 
 ```
@@ -43,7 +43,7 @@ alert(logLevel);    // undefined
 ```
 
 ---
-## **let: Block scope**
+## **.red[\*let]: Block scope**
 ***
 
 ```
@@ -56,7 +56,7 @@ alert(logLevel);    // ReferenceError
 ```
 
 ---
-## **let: Block scope**
+## **.red[\*let]: Block scope**
 ***
 
 ```
@@ -77,7 +77,7 @@ handlers[2](); //3
 ```
 
 ---
-## **let: Block scope**
+## **.red[\*let]: Block scope**
 ***
 
 ```
@@ -102,9 +102,9 @@ for (let k = 0; k < 3; k++) {
 ```
 
 ---
-## **let: Block scope**
+## **.red[\*let]: Block scope**
 ***
-### ▶ definition, statement, expression 
+## ▶ Definition, Statement, Expression 
 ```
 let x = 10;                  // let-definition
 let y = 20;
@@ -126,9 +126,9 @@ class: center, middle
 # `const`
 
 ---
-## **const: Constants**
+## **.red[\*const]: Constants**
 ***
-- let, var등으로 재정의 불가
+### ▶ let, var 등으로 재정의 불가
 
 ```
 const MAX_SIZE = 100;
@@ -140,10 +140,10 @@ let MAX_SIZE = 200;     // error
 class: center, middle
 
 # Function parameter
-# `default value`
+# `Default + Rest + Spread`
 
 ---
-## **default value**
+## **.red[\*Default value]**
 ***
 
 ```
@@ -155,6 +155,8 @@ function handlerRequest(data, method) {
 　
 handlerRequest({});
 ```
+
+--
 ```
 // ES6
 function handlerRequest(data, method='GET') {
@@ -162,4 +164,113 @@ function handlerRequest(data, method='GET') {
 }
 　
 handlerRequest({});
+```
+
+---
+## **.red[\*Rest & Spread]**
+***
+
+```
+// ES6
+function f(x, ...y) {  
+    // y is an Array
+    return x * y.length;
+}
+f(3, "hello", true) == 6
+```
+```
+// ES6
+function f(x, y, z) {  
+    return x + y + z;
+}
+// Pass each elem of array as argument
+f(...[1,2,3]) == 6  
+```
+
+---
+class: center, middle
+
+# `Arrows`
+
+---
+## **.red[\*Arrows]**
+***
+### ▶ 함수를 짧게 표현하는 방식
+```
+// ES5
+　
+// Expression bodies
+var odds = evens.map(function (v) {  
+    return v + 1;
+});
+var nums = evens.map(function (v, i) {  
+    return v + i;
+});
+var pairs = evens.map(function (v) {  
+    return { even: v, odd: v + 1 };
+});
+```
+
+--
+```
+// ES6
+　
+// Expression bodies
+var odds = evens.map(v => v + 1);  
+var nums = evens.map((v, i) => v + i);  
+var pairs = evens.map(v => ({even: v, odd: v + 1}));
+```
+
+---
+## **.red[\*Arrows]**
+***
+```
+// ES5
+　
+// Statement bodies
+nums.forEach(function (v) {  
+    if (v % 5 === 0) fives.push(v);
+});
+```
+
+--
+```
+// ES6
+　
+// Statement bodies
+nums.forEach(v => {  
+    if (v % 5 === 0)
+        fives.push(v);
+});
+```
+
+---
+## **.red[\*Arrows]**
+***
+```
+// ES5
+// Lexical this
+var bob = {  
+    _name: "Bob",
+    _friends: ['Bill', 'Scott', 'Olive'],
+    printFriends: function printFriends() {
+        var that = this;
+        this._friends.forEach(function (f) {
+            return console.log(that._name + " knows " + f);
+        });
+    }
+};
+```
+
+--
+```
+// ES6
+// Lexical this
+var bob = {  
+    _name: "Bob",
+    _friends: ['Bill', 'Scott', 'Olive'],
+    printFriends() {
+        this._friends.forEach(f => console.log(this._name + " knows " + f));
+    }
+}
 ```
