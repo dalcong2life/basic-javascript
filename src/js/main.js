@@ -75,7 +75,7 @@ slideshow.on('beforeShowSlide', function (slide) {
             console.log("<<<< " + slideNum + "번 슬라이드 예제 실행 결과 >>>");
             slide124();
             break;
-        case 173:
+        case 177:
             console.log("<<<< " + slideNum + "번 슬라이드 예제 실행 결과 >>>");
             var MathModule  = require('./module.js')();
 

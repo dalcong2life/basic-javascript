@@ -17,8 +17,8 @@ class: center, middle
 ## **함수형 프로그래밍의 개념**
 ***
 ### ▶ 함수형 프로그래밍에서 사용되는 용어
-- 순수함수: 외부에 아무런 영향을 미치지 않는 함수(f1, f2, f3)
-- 고계함수: 함수를 또 하나의 값으로 간주하여 함수의 인자 혹은 반환값으로 사용할 수 있는 함수(get_encrypted)
+- 순수함수(Pure function): 외부에 아무런 영향을 미치지 않는 함수(f1, f2, f3)
+- 고계함수(Higher-order function): 함수를 또 하나의 값으로 간주하여 함수의 인자 혹은 반환값으로 사용할 수 있는 함수(get_encrypted)
 ```
 // 특정 문자열을 암호화하는 함수
 f1 = encrypt1;
@@ -26,7 +26,7 @@ f2 = encrypt2;
 f3 = encrypt3;
 　
 // 암호화할 문자열
-pure_value = 'secure key'
+pure_value = 'pure value'
 encrypted_value = get_encrypted(x)
 　
 // 암호화된 문자열
@@ -44,6 +44,43 @@ encrypted_value = get_encrypted(f3);
 ### ▶ 자바스크립트에서 함수형 프로그래밍
 - 일급 객체로서의 함수
 - 클로저
+```
+var f1 = function(input) {
+        /* 암호화 작업 수행 */
+        return 1;
+}
+var f2 = function(input) {
+        /* 암호화 작업 수행 */
+        return 2;
+}
+var f3 = function(input) {
+        /* 암호화 작업 수행 */
+        return 3;
+}
+　
+var get_encrypted = function(func) {
+        var str = 'pure value';
+        return function() {     // 클로저
+            return func.call(null, str);
+        }
+}
+```
+
+---
+## **개념**
+***
+### ▶ 자바스크립트에서 함수형 프로그래밍
+```
+var encrypted_value = get_encrypted(f1)();
+console.log(encrypted_value);       // (출력값) 1
+　
+var encrypted_value = get_encrypted(f2)();
+console.log(encrypted_value);       // (출력값) 2
+　
+var encrypted_value = get_encrypted(f3)();
+console.log(encrypted_value);       // (출력값) 3
+```
+
 
 ---
 
@@ -103,7 +140,10 @@ function reduce(func, arr, init) {
 　    
     return accum;
 }
-　
+```
+
+--
+```
 var arr = [1,2,3,4];
 　
 var sum = function(x, y) {
@@ -114,14 +154,14 @@ var multiply = function(x, y) {
     return x * y;
 };
 　
-console.log(reduce(sum, arr, 0));
-console.log(reduce(multiply, arr, 1));
+console.log(reduce(sum, arr, 0));       // (출력값) 10
+console.log(reduce(multiply, arr, 1));  // (출력값) 24
 ```
 
 ---
 ## **함수형 프로그래밍을 활용한 주요 함수**
 ***
-### ▶ 커링
+### ▶ 1. 커링
 - 특정 함수에서 정의된 인자의 일부를 넣어 고정시키고, 나머지를 인자로 받는 새로운 함수를 만드는 것을 의미한다.
 ```
 function curry(func) {
@@ -147,8 +187,9 @@ console.log(new_func2(3));
 ---
 ## **함수형 프로그래밍을 활용한 주요 함수**
 ***
-### ▶ 커링
-- 
+### ▶ 1. 커링
+- 함수형 프로그래밍 언어에서는 기본 제공되지만 자바스크립트는 기본으로 제공되지 않음
+- 실제 구현하거나 Prototypejs 라이브러리 사용 
 ```
 Function.prototype.curry = function() {
         var fn = this, args = Array.prototype.slice.call(arguments);
@@ -160,10 +201,67 @@ Function.prototype.curry = function() {
 ```
 
 ---
-## **반복 함수**
+## **함수형 프로그래밍을 활용한 주요 함수**
 ***
-### ▶ map
-- 배열의 각 요소를 꺼내서 사용자 정의 함수를 적용시켜 새로운 값을 반환
+### ▶ 2. bind
+- 커링 기법을 활용한 함수
+- 함수를 호출 할 때 this에 바인딩시킬 객체를 사용자가 지정할 수 있다
+```
+Function.prototype.bind = function(thisArg) {
+        var slice = Array.prototype.slice;
+        var fn = this, args = slice.call(arguments, 1);
+        return function() {
+            return fn.apply(thisArg, args.concat(slice.call(arguments)));
+        }
+}
+　　
+var print_all = function(arg) {
+        for(var i in this) console.log(i + " : " + this[i]);
+        for(var i in arguments) console.log(i + " : " + arguments[i]);
+}
+　　
+var myObj = {name : '홍길동'};
+var myFunc = print_all.bind(myObj);
+myFunc();
+　　
+var myFunc2 = print_all.bind(myObj, 'red', 'green');
+myFunc2('blue');
+```
+
+---
+## **함수형 프로그래밍을 활용한 주요 함수**
+***
+### ▶ 3. 반복함수
+- each: 배열 또는 객체의 각 프로퍼티를 꺼내서 차례대로 특정 함수에 인자로 넣어 실행
+```
+function each(obj, fn, args) {
+        if(obj.length === undefined) {
+            for(var i in obj) {
+                fn.apply(obj[i], args || [i, obj[i]]);
+            }
+        } else {
+            for(var i = 0; i < obj.length; i++) {
+                fn.apply(obj[i], args || [i, obj[i]]);
+            }
+        }
+        return obj;
+}
+　　
+each([1,2,3], function(idx, num) {
+        console.log(idx + " : " + num);
+});
+　
+var obj = {name: '홍길동', age: 30};
+each(obj, function(idx, value) {
+        console.log(idx + " : " + value);
+}); 
+```
+
+---
+## **함수형 프로그래밍을 활용한 주요 함수**
+***
+### ▶ 3. 반복함수
+- map: 배열의 각 요소를 꺼내서 사용자 정의 함수를 적용시켜 새로운 값을 반환
 ```
 Array.prototype.map = function(callback) {
         // this, callback 유효성 체크 필요
@@ -188,10 +286,10 @@ console.log(new_arr);       // [1, 4, 9, 16]
 ```
 
 ---
-## **반복 함수**
+## **함수형 프로그래밍을 활용한 주요 함수**
 ***
-### ▶ reduce
-- 배열의 각 요소를 꺼내서 사용자 정의 함수를 적용시킨 뒤, 그 값을 계속해서 누적시키는 함수
+### ▶ 3. 반복함수
+- reduce: 배열의 각 요소를 꺼내서 사용자 정의 함수를 적용시킨 뒤, 그 값을 계속해서 누적시키는 함수
 ```
 Array.prototype.reduce = function(callback) {
         // this, callback 유효성 체크 필요
@@ -208,7 +306,7 @@ Array.prototype.reduce = function(callback) {
 　
 var arr = [1,2,3,4];
 var accumulated_val = arr.reduce(function(x, y) {
-        return x + y*y;   
+        return x + y * y;   
 });
 console.log(accumulated_val);       // 30
 ```
@@ -300,7 +398,7 @@ for (var k = 0; k < 3; k++) {
 ```
 ```
 // ES6
-for (let k = 0; k < 3; k++) {
+for (var k = 0; k < 3; k++) {
     let x = k;
 　    
     handlers[x] = function() {
@@ -548,7 +646,12 @@ function timeout(duration) {
 　
 timeout(1000)
         .then(function() {
+            console.log('1번 작업 완료됨');
             timeout(2000);
+        })
+        .then(function() {
+            console.log('2번 작업 완료됨');
+            timeout(3000);
         })
         .then(function() {
             console.log('모든 작업이 완료됨');
